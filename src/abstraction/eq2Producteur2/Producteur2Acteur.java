@@ -2,31 +2,35 @@ package abstraction.eq2Producteur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eqXRomu.filiere.Filiere;
 import abstraction.eqXRomu.filiere.IActeur;
 import abstraction.eqXRomu.general.Journal;
 import abstraction.eqXRomu.general.Variable;
+import abstraction.eqXRomu.general.VariableReadOnly;
+import abstraction.eqXRomu.produits.Feve;
 import abstraction.eqXRomu.produits.IProduit;
 
 public class Producteur2Acteur implements IActeur {
-	
 	protected int cryptogramme;
 	protected Journal journal;
+
+	protected HashMap<Feve,Variable> stock; //Feve = qualite et Variable = quantite
+	protected HashMap<Feve,Double> prodParStep;
+	private static final double PART=0.1;
 	protected int nb_employes;
 	protected int nb_employes_equitable;
 	protected int nb_employes_enfants;
 
 	public Producteur2Acteur() {
 		this.journal = new Journal(this.getNom()+" journal", this);
+	
 	}
 	
 	public void initialiser() {
-		int nb_employes = 3300;
-		int nb_employes_equitable = 82;
-		int nb_employes_enfants = 840;
-		
+	
 	}
 
 	public String getNom() {// NE PAS MODIFIER
@@ -42,7 +46,8 @@ public class Producteur2Acteur implements IActeur {
 	////////////////////////////////////////////////////////
 
 	public void next() {
-		this.journal.ajouter("étape="+Filiere.LA_FILIERE.getEtape());
+		this.journal.ajouter("étape = " + Filiere.LA_FILIERE.getEtape());
+		this.journal.ajouter("prix producteur = " + Filiere.LA_FILIERE.getParametre("cout moyen stockage producteur").getValeur());
 	}
 
 	public Color getColor() {// NE PAS MODIFIER
@@ -50,7 +55,7 @@ public class Producteur2Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		 return "Nous sommes CacaoLand, producteur au sein de la filière du cacao. Notre objectif est de produire du cacao de haute qualité de manière équitable avec également du cacao de basse et moyenne qualité en quantité.";
+		return "Nous sommes CacaoLand, producteur au sein de la filière du cacao. Notre objectif est de produire du cacao de haute qualité de manière équitable avec également du cacao de basse et moyenne qualité en quantité.";
 	}
 
 	// Renvoie les indicateurs
@@ -121,3 +126,4 @@ public class Producteur2Acteur implements IActeur {
 		}
 	}
 }
+
